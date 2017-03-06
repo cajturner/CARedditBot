@@ -6,7 +6,7 @@ update_id = None
 
 def run():
     global update_id
-    bot = telegram.Bot('360545018:AAGQ9Gz0sLriOYk0cAXOuh72n9UTmvl52Ks')
+    bot = telegram.Bot('TOKEN')
     try:
         update_id = bot.getUpdates()[0].update_id
     except IndexError:
