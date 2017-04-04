@@ -1,7 +1,14 @@
 import telegram
 import requests
+import boto3
 
 update_id = None
+
+
+def upload_to_s3(data, key_name):
+    s3 = boto3.resource('s3')
+    bucket = s3.Bucket('results')
+    bucket.upload_fileobj(data, key_name)
 
 
 def run():
@@ -21,6 +28,9 @@ def run():
                                      params={"user_key": "c70f5f260f515eb026675097239c19c9", "input": update.message.text})
                     resp_value = r.json()['responses'][0]
                     update.message.reply_text(resp_value)
+
+                    # Log conv
+
                 except:
                     pass
 
