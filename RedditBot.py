@@ -6,7 +6,7 @@ import requests
 import telegram
 
 update_id = None
-bot_name = "Reddit"
+bot_name = "Alice"
 convs = {}
 
 
@@ -32,7 +32,7 @@ def add_to_log(username, request, response):
 def run():
     global update_id
     global convs
-    bot = telegram.Bot('360545018:AAHcH68WE-QP5RjcP_Zu7ZYwMW6BuV6TeQ8')
+    bot = telegram.Bot('354930862:AAFoCXTgomrLfvCsvp4a7oOcZjWrm54pXlw')
     try:
         update_id = bot.getUpdates()[0].update_id
     except IndexError:
@@ -48,9 +48,10 @@ def run():
                         username = update.message.from_user.first_name + update.message.from_user.last_name
                     if update.message.text != "EXIT":
 
-                        r = requests.get('http://ec2-54-211-74-133.compute-1.amazonaws.com:5000',
-                                         params={"q": update.message.text})
-                        resp_value = r.json()[0]['value'][0]
+                        r = requests.post('https://aiaas.pandorabots.com/talk/1409614304594/alice',
+                                          params={"user_key": "c70f5f260f515eb026675097239c19c9",
+                                                  "input": update.message.text})
+                        resp_value = r.json()['responses'][0]
                         update.message.reply_text(resp_value)
                         log_request = (update.message.date, update.message.text)
                         log_response = (datetime.datetime.now().replace(microsecond=0), resp_value)
