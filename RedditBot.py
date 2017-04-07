@@ -6,7 +6,7 @@ import requests
 import telegram
 
 update_id = None
-bot_name = ""
+bot_name = "Alice"
 convs = {}
 
 
@@ -42,16 +42,13 @@ def run():
             update_id = update.update_id + 1
             if update.message:
                 try:
-                    r = requests.post('https://aiaas.pandorabots.com/talk/1409614304594/alice',
-                                     params={"user_key": "c70f5f260f515eb026675097239c19c9", "input": update.message.text})
-                    resp_value = r.json()['responses'][0]
-                    update.message.reply_text(resp_value)
                     username = update.message.from_user.username
                     if update.message.text != "EXIT":
 
-                        r = requests.get('http://ec2-54-211-74-133.compute-1.amazonaws.com:5000',
-                                         params={"q": update.message.text})
-                        resp_value = r.json()[0]['value'][0]
+                        r = requests.post('https://aiaas.pandorabots.com/talk/1409614304594/alice',
+                                          params={"user_key": "c70f5f260f515eb026675097239c19c9",
+                                                  "input": update.message.text})
+                        resp_value = r.json()['responses'][0]
                         update.message.reply_text(resp_value)
                         log_request = str(update.message.date) + "    " + update.message.text
                         log_response = str(datetime.datetime.now().replace(microsecond=0)) + "    " + resp_value
