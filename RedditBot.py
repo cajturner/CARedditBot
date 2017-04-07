@@ -6,7 +6,7 @@ import requests
 import telegram
 
 update_id = None
-bot_name = ""
+bot_name = "Reddit"
 convs = {}
 
 
