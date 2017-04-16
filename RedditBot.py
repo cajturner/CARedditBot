@@ -14,7 +14,7 @@ def upload_to_s3(data, key_name):
     global bot_name
     s3 = boto3.resource('s3')
     s = StringIO()
-    s.write(str("\n".join(str(d) +"    "+ t for d,t in data)))
+    s.write(str("\n".join(str(d) + "    " + t for d,t in data)))
     s3.Object('redditbot', key_name + "_" + str(datetime.datetime.now()) + "_" + bot_name + ".txt").put(
         Body=s.getvalue())
     print("Exported to s3")
@@ -68,7 +68,7 @@ def run():
                     print(e)
         to_remove = []
         for username, conversations in convs.items():
-            if (datetime.datetime.now().replace(microsecond=0) - conversations[-1][0]).total_seconds() > 60:
+            if (datetime.datetime.now().replace(microsecond=0) - conversations[-1][0]).total_seconds() > 600:
                 upload_to_s3(convs[username], username)
                 to_remove.append(username)
         for username in to_remove:
